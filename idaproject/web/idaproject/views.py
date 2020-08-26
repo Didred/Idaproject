@@ -9,7 +9,10 @@ from . import get_api
 from .forms import PictureForm, ShowForm
 
 def home(request):
-    return render(request, 'home.html')
+    api = get_api()
+    pictures = api.get_pictures()
+
+    return render(request, 'home.html', {'pictures': pictures})
 
 def add(request):
     api = get_api()

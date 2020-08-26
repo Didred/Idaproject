@@ -5,6 +5,13 @@
     </head>
     <body>
         <h3>Список изображений</h3>
+        {% if pictures %}
+            {% for picture in pictures %}
+                <a href="{% url 'get' id=picture.id %}">{{picture.name}}</a><p></p>
+            {% endfor %}
+        {% else %}
+            Нет доступных изображений
+        {% endif %}
         <a href="{% url 'add'%}">Добавить изображение</a>
     </body>
 </html>

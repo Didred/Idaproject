@@ -28,6 +28,10 @@ class API:
         except sqlalchemy.orm.exc.NoResultFound:
             raise Exception("Picture not found")
 
+    def get_pictures(self):
+        return self._session.query(Picture).all()
+
+
     def _add(self, object):
         self._session.add(object)
         self._session.commit()
