@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Get</title>
+    </head>
+    <body>
+        <a href="{% url 'home'%}">Назад к списку</a>
+        <h3>{{image.name}}</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <p></p>Ширина
+            <input value="{{image.width}}">
+            <p></p>Высота
+            <input value="{{image.height}}">
+            <p></p>
+            {% csrf_token %}
+            <input type="submit" value="Отправить">
+            <p></p>
+        </form>
+        <img src="data:image/gif;base64,{{picture}}" width="{{image.width}}" height="{{image.height}}">
+        <label>{{errors}}</label>
+    </body>
+</html>

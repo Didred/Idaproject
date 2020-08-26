@@ -5,15 +5,20 @@ from sqlalchemy import (
     Integer,
     BLOB
 )
+from PIL import Image
+import io
 
 class Picture(Base):
     __tablename__ = 'picture'
 
     id = Column(Integer, primary_key=True)
+    name = Column(String)
     picture = Column(BLOB)
     height = Column(Integer)
     width = Column(Integer)
 
-    def __init__(self, picture):
+    def __init__(self, name, picture):
+        self.name = name
         self.picture = picture
+        self.width, self.height = Image.open(io.BytesIO(picture)).size
 
