@@ -26,7 +26,11 @@ def add(request):
             if (picture and link) or (not picture and not link):
                 return render(request, 'add.html', {'form': PictureForm, 'errors': 'Не введено ни одного варианта, или введены оба'})
 
-            id = api.add(link, request.FILES['file'].name, picture)
+            name = request.FILES['file'].name if picture else "test"
+            try:
+                id = api.add(link, name, picture)
+            except:
+                return render(request, 'add.html', {'form': PictureForm, 'errors': "Невалидная ссылка"})
 
             return redirect('/get/' + str(id))
     return render(request, 'add.html', {'form': PictureForm})
