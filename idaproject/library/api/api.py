@@ -54,20 +54,16 @@ class API:
     def resize(self, id, new_width, new_height):
         image = self.get(id)
         picture = Image.open(io.BytesIO(image.picture))
-        print(new_width, new_height)
 
         if not new_height:
             new_height = int((int(new_width) / image.width) * image.height)
         else:
             new_height = int(new_height)
         if not new_width:
-            print(new_height / image.height)
             new_width = int((int(new_height) / image.height) * image.width)
         else:
             new_width = int(new_width)
-        print(new_width, new_height)
 
-        print(new_height, new_width)
         new_picture = picture.resize((new_width, new_height))
         buffered = BytesIO()
         new_picture.save(buffered, format="PNG")
