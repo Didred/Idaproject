@@ -42,6 +42,12 @@ def get(request, id):
         if form.is_valid():
             width = form.cleaned_data['width']
             height = form.cleaned_data['height']
+
+            if not width and not height:
+                image = api.get(id)
+                picture = api.convert_picture(image.picture)
+                return render(request, 'get.html', {'image': image, 'picture': picture, 'form': form})
+
             image = api.resize(id, width, height)
             picture = str(image.picture)[2: -1]
 
