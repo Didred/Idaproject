@@ -17,8 +17,12 @@ class Picture(Base):
     height = Column(Integer)
     width = Column(Integer)
 
-    def __init__(self, name, picture):
+    def __init__(self, name, picture, width=None, height=None):
         self.name = name
         self.picture = picture
-        self.width, self.height = Image.open(io.BytesIO(picture)).size
+        if width:
+            self.width = width
+            self.height = height
+        else:
+            self.width, self.height = Image.open(io.BytesIO(picture)).size
 

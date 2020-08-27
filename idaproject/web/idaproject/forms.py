@@ -7,5 +7,5 @@ class PictureForm(forms.Form):
     file = forms.ImageField(required=False)
 
 class ShowForm(forms.Form):
-    width = forms.CharField(max_length=100, required=True)
-    height = forms.CharField(max_length=100, required=True)
+    width = forms.CharField(max_length=100, required=False)
+    height = forms.CharField(max_length=100, required=False)

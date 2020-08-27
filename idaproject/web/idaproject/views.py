@@ -1,5 +1,3 @@
-import base64
-
 from django.shortcuts import render
 from django.shortcuts import (
     render,
@@ -35,18 +33,24 @@ def add(request):
             return redirect('/get/' + str(id))
     return render(request, 'add.html', {'form': PictureForm})
 
-def _get_picture(sender):
-    return str(base64.b64encode(sender))[2: -1]
-
 def get(request, id):
     api = get_api()
-    image = api.get(id)
-    picture = _get_picture(image.picture)
 
     if request.method == 'POST':
-        pass
+        form = ShowForm(request.POST)
+        print()
+        if form.is_valid():
+            width = form.cleaned_data['width']
+            height = form.cleaned_data['height']
+            image = api.resize(id, width, height)
+            picture = str(image.picture)[2: -1]
+
+            return render(request, 'get.html', {'image': image, 'picture': picture, 'form': form})
+
     else:
         form = ShowForm()
 
+    image = api.get(id)
+    picture = api.convert_picture(image.picture)
     return render(request, 'get.html', {'image': image, 'picture': picture, 'form': form})
 
